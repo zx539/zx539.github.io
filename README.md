@@ -80,7 +80,7 @@ python3 scripts/new-content.py post my-new-post --title "项目复盘"
 
 ## GitHub Pages 部署
 
-源码及日常维护统一使用 `codex/sakura-template-layout`。当前工作流仅允许该分支发布：推送后先构建、运行回归测试，通过后更新 `gh-pages`；手动运行也需选择该分支。`gh-pages` 仅存放发布产物。
+仓库默认分支为 `codex/sakura-template-layout`，源码及日常维护统一使用该分支。当前工作流仅允许该分支发布：推送后先构建、运行回归测试，通过后更新 `gh-pages`；手动运行也需选择该分支。`gh-pages` 仅存放发布产物。
 
 1. 确认 `hugo.toml` 中的 `baseURL` 为 `https://zxpage.online/`，`static/CNAME` 内容为 `zxpage.online`。
 2. 推送代码，在 `Actions` 页面等待 `Deploy Hugo site to Pages` 工作流完成。
