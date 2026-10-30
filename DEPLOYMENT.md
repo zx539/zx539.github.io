@@ -160,13 +160,15 @@ server {
     }
 
     # Hugo 的指纹 CSS 文件名会随内容改变，可以长期缓存。
-    location ~* ^/css/.+\.[a-f0-9]{32,}\.css$ {
+    location ~* "^/css/.+\.[a-f0-9]{32,}\.css$" {
         try_files $uri =404;
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
 }
 ```
+
+正则表达式中的 `{32,}` 必须保留在引号内，否则 Nginx 会把花括号解析为配置块，报 `unknown directive`。
 
 这是普通静态网站，不需要代理到 Hugo 的 1313 端口。文章页面由 Hugo 输出为目录中的 `index.html`，因此可以直接访问 `/posts/文章名/`。
 
