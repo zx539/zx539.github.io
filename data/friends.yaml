@@ -1,7 +1,12 @@
 - name: GitHub
   url: https://github.com/zx539
   avatar: images/friends/github.webp
-  description: 我的代码仓库与项目记录。
+  description: 我的GitHub代码仓库与项目记录。
+  tag: Code
+- name: GitCode
+  url: https://gitcode.com/2403_88363745
+  avatar: images/friends/gitcode.png
+  description: 我的GitCode代码仓库与项目记录。
   tag: Code
 - name: 东北大学秦皇岛分校
   url: https://www.neuq.edu.cn/
