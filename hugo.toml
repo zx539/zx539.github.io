@@ -1,5 +1,6 @@
-baseURL = "https://zx539.github.io/"
+baseURL = "https://zxpage.online/"
 languageCode = "zh-CN"
+timeZone = "Asia/Shanghai"
 title = "风间惟花 | AI Agent 开发者"
 
 [params]

@@ -1,9 +1,18 @@
 {{ define "main" }}
-  {{ $showToc := and (eq .Section "posts") (gt .WordCount 180) }}
+  {{ $isEntry := in (slice "posts" "weekly" "photos") .Section }}
+  {{ $showToc := and (in (slice "posts" "weekly") .Section) (gt .WordCount 180) }}
+  {{ $backURL := site.Home.RelPermalink }}
+  {{ $backTitle := "首页" }}
+  {{ if $isEntry }}
+    {{ with site.GetPage .Section }}
+      {{ $backURL = .RelPermalink }}
+      {{ $backTitle = .Title }}
+    {{ end }}
+  {{ end }}
   <div class="article-shell section{{ if $showToc }} article-shell--with-toc{{ end }}">
     <div class="article-toolbar">
-      <a class="back-link back-link--surface" href="{{ cond (eq .Section "posts") ("posts/" | relURL) (site.Home.RelPermalink) }}">← 返回{{ if eq .Section "posts" }}文章列表{{ else }}首页{{ end }}</a>
-      {{ if eq .Section "posts" }}
+      <a class="back-link back-link--surface" href="{{ $backURL }}">← 返回{{ $backTitle }}</a>
+      {{ if $isEntry }}
         <div class="article-toolbar__meta">
           {{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>{{ end }}
           <span>{{ .ReadingTime }} 分钟阅读</span>
@@ -14,10 +23,10 @@
 
     <article class="article article--reading{{ if $showToc }} article--with-toc{{ end }}">
       <header class="article-header">
-        <p class="eyebrow">{{ if eq .Section "posts" }}読みもの · Writing{{ else }}{{ .Section | default "Page" }}{{ end }}</p>
+        <p class="eyebrow">{{ if eq .Section "posts" }}読みもの · Writing{{ else if eq .Section "weekly" }}週の記録 · 周报{{ else if eq .Section "photos" }}日々の風景 · 每日一景{{ else }}{{ .Section | default "Page" }}{{ end }}</p>
         <h1>{{ .Title }}</h1>
         {{ with .Params.summary }}<div class="article-deck">{{ . | markdownify }}</div>{{ end }}
-        {{ if eq .Section "posts" }}
+        {{ if $isEntry }}
           <div class="article-meta">
             {{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>{{ end }}
             <span>{{ .ReadingTime }} 分钟阅读</span>
@@ -44,8 +53,8 @@
         {{ end }}
       </div>
 
-      {{ if eq .Section "posts" }}
-        <nav class="article-pagination" aria-label="相邻文章">
+      {{ if $isEntry }}
+        <nav class="article-pagination" aria-label="相邻记录">
           {{ with .PrevInSection }}<a href="{{ .RelPermalink }}"><span>上一篇</span><strong>{{ .Title }}</strong></a>{{ end }}
           {{ with .NextInSection }}<a href="{{ .RelPermalink }}"><span>下一篇</span><strong>{{ .Title }}</strong></a>{{ end }}
         </nav>

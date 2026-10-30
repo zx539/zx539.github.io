@@ -1,17 +1,7 @@
 {{ $profile := site.Data.profile }}
 {{ $friends := site.Data.friends }}
-{{ $daily := site.Data.daily }}
 <aside class="home-rail" aria-label="补充信息">
-  <section class="rail-section rail-scene" aria-labelledby="daily-scene-title">
-    <header>
-      <p>今日一景</p>
-      <span>{{ $daily.label }}</span>
-    </header>
-    <figure>
-      <img src="{{ $daily.image | relURL }}" alt="{{ $daily.alt }}">
-      <figcaption>{{ $daily.caption }}</figcaption>
-    </figure>
-  </section>
+  {{ partial "daily-scene.html" . }}
 
   <section class="rail-section rail-about" id="about" aria-labelledby="about-title">
     <h2 id="about-title">About Me</h2>

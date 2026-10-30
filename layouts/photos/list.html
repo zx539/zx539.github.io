@@ -1,0 +1,31 @@
+{{ define "main" }}
+  <section class="section blog-index">
+    <div class="blog-index__toolbar">
+      <a class="back-link back-link--surface" href="{{ site.Home.RelPermalink }}">← 返回首页</a>
+      <div class="blog-heading__meta"><span><strong>{{ len .RegularPages }}</strong> 次记录</span></div>
+    </div>
+    <header class="blog-heading__copy">
+      <p class="eyebrow">日々の風景 · Daily Scenes</p>
+      <h1>{{ .Title }}</h1>
+      <p>{{ .Description }}</p>
+    </header>
+  </section>
+  <section class="section post-grid photo-archive" aria-label="每日一景列表">
+    {{ range .RegularPages.ByDate.Reverse }}
+      {{ $cover := partial "photos/cover.html" . }}
+      {{ $alt := .Params.cover_alt | default .Title }}
+      <article class="post-card photo-card">
+        <a href="{{ .RelPermalink }}">
+          {{ with $cover }}<img src="{{ . }}" alt="{{ $alt }}" loading="lazy" decoding="async">{{ end }}
+          <div class="photo-card__copy">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+            <h2>{{ .Title }}</h2>
+            {{ with .Params.summary }}<div class="post-card__summary">{{ . | markdownify }}</div>{{ end }}
+          </div>
+        </a>
+      </article>
+    {{ else }}
+      <p class="empty-state">还没有发布每日一景。</p>
+    {{ end }}
+  </section>
+{{ end }}

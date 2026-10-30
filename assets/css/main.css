@@ -22,6 +22,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
   scrollbar-color: var(--vermilion) #ffe4ef;
@@ -4139,5 +4143,119 @@ body.inner-page {
   .article-body a,
   .code-copy {
     transition: none;
+  }
+}
+
+/* Weekly notes and Markdown-backed daily scenes */
+#weekly,
+#daily-scene {
+  scroll-margin-top: 90px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 18px;
+  border: 1px dashed #d9c8d2;
+  border-radius: var(--corner);
+  color: var(--ink-soft);
+  background: rgba(255, 250, 253, 0.7);
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+.rail-scene header h2 {
+  margin: 0;
+  color: #55766a;
+  font: 900 0.85rem var(--sans);
+}
+
+.scene-archive-link {
+  flex-shrink: 0;
+  color: var(--vermilion);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.scene-description {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+  line-height: 1.7;
+}
+
+.scene-slide h3 {
+  margin: 6px 0;
+  color: var(--ink);
+  font-size: 0.96rem;
+  overflow-wrap: anywhere;
+}
+
+.scene-slide time {
+  font: 0.7rem var(--sans);
+}
+
+.scene-slide p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.scene-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 0.72rem;
+}
+
+.scene-controls button {
+  min-width: 32px;
+  min-height: 32px;
+  padding: 5px 8px;
+  border: 1px solid #d9c8d2;
+  border-radius: var(--corner);
+  background: var(--paper);
+  cursor: pointer;
+}
+
+.scene-controls button:hover {
+  border-color: var(--vermilion);
+  color: var(--vermilion);
+}
+
+.scene-controls button:focus-visible,
+.scene-archive-link:focus-visible,
+.scene-slide a:focus-visible {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 3px;
+}
+
+.photo-archive {
+  align-items: start;
+}
+
+.photo-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.photo-card a {
+  padding: 0;
+}
+
+.photo-card img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.photo-card__copy {
+  padding: 24px;
+}
+
+@media (max-width: 820px) {
+  .home-nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

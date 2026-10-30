@@ -1,8 +1,15 @@
 {{- $destination := .Destination -}}
 {{- $external := or (strings.HasPrefix $destination "http://") (strings.HasPrefix $destination "https://") -}}
 {{- if not $external -}}
-  {{- $destination = strings.TrimPrefix "/" $destination -}}
-  {{- $destination = $destination | relURL -}}
+  {{- $url := urls.Parse $destination -}}
+  {{- with .Page.Resources.Get $url.Path -}}
+    {{- $destination = .RelPermalink -}}
+    {{- with $url.RawQuery }}{{ $destination = printf "%s?%s" $destination . }}{{ end -}}
+    {{- with $url.Fragment }}{{ $destination = printf "%s#%s" $destination . }}{{ end -}}
+  {{- else -}}
+    {{- $destination = strings.TrimPrefix "/" $destination -}}
+    {{- $destination = $destination | relURL -}}
+  {{- end -}}
 {{- end -}}
 <figure class="md-figure">
   <img src="{{ $destination | safeURL }}" alt="{{ .Text }}" loading="lazy" decoding="async">

@@ -2,3 +2,5 @@ public/
 resources/_gen/
 .hugo_build.lock
 assert/背景动图.mp4
+__pycache__/
+dist-server/

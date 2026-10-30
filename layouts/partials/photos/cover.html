@@ -1,0 +1,17 @@
+{{- $cover := "" -}}
+{{- if .Params.cover -}}
+  {{- with .Resources.GetMatch .Params.cover -}}
+    {{- if eq .MediaType.MainType "image" -}}
+      {{- $cover = .RelPermalink -}}
+    {{- else -}}
+      {{- errorf "每日一景 %s 的 cover 必须是同一文件夹中的图片" $.File.Path -}}
+    {{- end -}}
+  {{- else -}}
+    {{- errorf "每日一景 %s 找不到封面 %s，请将图片放在 index.md 所在文件夹" .File.Path .Params.cover -}}
+  {{- end -}}
+{{- else -}}
+  {{- with sort (.Resources.ByType "image") "Name" -}}
+    {{- $cover = (index . 0).RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+{{- return $cover -}}

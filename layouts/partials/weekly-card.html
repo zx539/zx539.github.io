@@ -1,0 +1,10 @@
+<article class="post-card">
+  <a href="{{ .RelPermalink }}">
+    <div class="post-card__meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+      <span>周报</span>
+    </div>
+    <h3>{{ .Title }}</h3>
+    {{ with .Params.summary }}<div class="post-card__summary">{{ . | markdownify }}</div>{{ end }}
+  </a>
+</article>

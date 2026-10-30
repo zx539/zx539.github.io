@@ -1,0 +1,44 @@
+<section class="rail-section rail-scene" id="daily-scene" aria-labelledby="daily-scene-title" aria-roledescription="轮播" data-daily-scene>
+  <header>
+    <h2 id="daily-scene-title">每日一景</h2>
+    <a class="scene-archive-link" href="{{ "photos/" | relURL }}">查看全部 →</a>
+  </header>
+  <p class="scene-description" data-scene-description>近七天的生活片段，留住身边的小风景。</p>
+  <div class="scene-slides" id="daily-scene-slides">
+    {{ $first := true }}
+    {{ range (where site.RegularPages "Section" "photos").ByDate.Reverse }}
+      {{ $cover := partial "photos/cover.html" . }}
+      {{ if $cover }}
+        <article class="scene-slide" data-scene-date="{{ .Date.Format "2006-01-02" }}" {{ if not $first }}hidden{{ end }}>
+          <a href="{{ .RelPermalink }}">
+            <figure>
+              <img src="{{ $cover }}" alt="{{ .Params.cover_alt | default .Title }}" loading="lazy" decoding="async">
+              <figcaption>
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+                <h3>{{ .Title }}</h3>
+                {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+              </figcaption>
+            </figure>
+          </a>
+        </article>
+        {{ $first = false }}
+      {{ end }}
+    {{ end }}
+  </div>
+  {{ with site.Data.daily }}
+    <figure data-scene-placeholder {{ if not $first }}hidden{{ end }}>
+      <img src="{{ .image | relURL }}" alt="{{ .alt }}" loading="lazy" decoding="async">
+      <figcaption>{{ .caption }}</figcaption>
+    </figure>
+  {{ end }}
+  <p class="empty-state" data-scene-empty {{ if not $first }}hidden{{ end }}>还没有发布每日一景，期待下一次值得记录的风景。</p>
+  <div class="scene-controls" data-scene-controls hidden>
+    <button type="button" data-scene-prev aria-controls="daily-scene-slides" aria-label="上一张每日一景">←</button>
+    <span data-scene-counter role="status" aria-live="polite" aria-atomic="true"></span>
+    <button type="button" data-scene-next aria-controls="daily-scene-slides" aria-label="下一张每日一景">→</button>
+    <button type="button" data-scene-toggle aria-pressed="false">暂停轮播</button>
+  </div>
+  <noscript><p class="scene-description">自动轮播需要启用 JavaScript，也可以通过“查看全部”浏览所有记录。</p></noscript>
+</section>
+{{ $script := resources.Get "js/daily-scene.js" | minify | fingerprint }}
+<script type="module" src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>

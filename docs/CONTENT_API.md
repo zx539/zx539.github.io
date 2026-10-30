@@ -7,7 +7,9 @@
 | 功能 | 数据或内容 | 图片目录 | 渲染模板 |
 | --- | --- | --- | --- |
 | 个人信息 | `data/profile.yaml` | `static/images/` | `header.html`、`home-sidebar.html`、`hero.html`、`home-rail.html`、`footer.html` |
-| 每日一景 | `data/daily.yaml` | `static/images/daily/` | `home-rail.html` |
+| 每日一景 | `content/photos/*/index.md` | 与 `index.md` 同目录 | `daily-scene.html`、`photos/list.html`、`single.html` |
+| 周报 | `content/weekly/*.md` | 可选 `static/images/` | `weekly.html`、`weekly/list.html`、`single.html` |
+| 空状态风景配图 | `data/daily.yaml` | `static/images/daily/` | `daily-scene.html` |
 | 博客文章 | `content/posts/*.md` | `static/images/posts/` | `posts.html`、`list.html`、`single.html` |
 | 项目经历 | `data/profile.yaml` 的 `projects` | 可选 `static/images/projects/` | `projects.html` |
 | 技能标签 | `data/profile.yaml` 的 `skills` | 无 | `home-sidebar.html`、`skills.html` |
@@ -111,30 +113,53 @@ awards:
 
 ## 3. 每日一景接口
 
-配置文件：`data/daily.yaml`
+每次记录放在 `content/photos/日期-名称/`，Markdown 和图片放在同一个文件夹。新建草稿：
 
-图片目录：`static/images/daily/`
-
-```yaml
-label: SAKURA · 01
-image: images/daily/sakura-overlook.webp
-alt: 樱色天空下眺望城市的狐狸娘
-caption: 春风有信，花开有期。
+```bash
+python3 scripts/new-content.py photo evening-walk --title "傍晚散步"
 ```
 
-| 字段 | 必填 | 用途 |
-| --- | --- | --- |
-| `label` | 是 | 每日一景右上角编号或日期 |
-| `image` | 是 | 图片路径，必须以 `images/daily/` 开头 |
-| `alt` | 是 | 无障碍替代文本，应描述图片内容 |
-| `caption` | 是 | 图片下方短句 |
+例如：
 
-替换步骤：
+```text
+content/photos/2026-10-30-evening-walk/
+├── index.md
+├── sky.jpg
+└── street.jpg
+```
 
-1. 把新图片放进 `static/images/daily/`，例如 `2026-07-14.jpg`。
-2. 修改 `image` 为 `images/daily/2026-07-14.jpg`。
-3. 同步修改 `label`、`alt` 和 `caption`。
-4. 不要修改 `profile.yaml` 的 `hero_art`，两者已经解耦。
+`index.md` 格式：
+
+```markdown
+---
+title: "傍晚散步"
+date: "2026-10-30T00:00:00+08:00"
+draft: false
+summary: "下班后的一小段散步时光。"
+cover: "sky.jpg"
+cover_alt: "落日下的天空"
+---
+
+今天的记录。
+
+![落日下的天空](sky.jpg)
+![街边的树](street.jpg)
+```
+
+| 字段 | 用途 |
+| --- | --- |
+| `title` | 列表和详情标题 |
+| `date` | 记录所属日期，用于排序和近七天筛选 |
+| `draft` | `true` 时不发布，生成命令默认创建草稿 |
+| `summary` | 首页和归档摘要 |
+| `cover` | 同文件夹中的封面文件名，留空使用按文件名排序的第一张图片 |
+| `cover_alt` | 封面替代文本，留空使用标题 |
+
+首页右栏按北京时间展示今天及此前六天的封面，五秒轮播，支持前后切换和暂停。七天内没有新照片时展示最近一次；每分钟重新检查日期，跨天无需重新构建。归档 `/photos/` 保留全部已发布记录。
+
+照片需要在正文中用 Markdown 引用才会显示在详情中。渲染模板先查找同文件夹的图片资源，再兼容原有 `static/` 路径；原有博客的图片写法保持可用。
+
+未发布任何带封面的照片记录时，保留 `data/daily.yaml` 中的 `image`、`alt`、`caption` 作为空状态配图，`label` 为旧版字段，不参与轮播日期判断。原有配图仍位于 `static/images/daily/`，与封面 `profile.yaml` 的 `hero_art` 继续解耦。
 
 ## 4. 博客文章接口
 
@@ -232,7 +257,7 @@ Goldmark 已启用标题 ID、表格、任务列表、定义列表、脚注、�
 当前顺序：
 
 ```text
-左栏个人导航 | 中栏：封面 -> 最近文章 -> 项目经历 | 右栏：每日一景 -> About Me -> 友情链接
+左栏个人导航 | 中栏：封面 -> 最近文章 -> 项目经历 -> 最近周报 | 右栏：每日一景 -> About Me -> 友情链接
 ```
 
 中栏每个模块对应一个 partial：
@@ -241,9 +266,10 @@ Goldmark 已启用标题 ID、表格、任务列表、定义列表、脚注、�
 {{ partial "hero.html" . }}
 {{ partial "posts.html" . }}
 {{ partial "projects.html" . }}
+{{ partial "weekly.html" . }}
 ```
 
-调整模块顺序时移动整行，同时更新 `posts.html`、`projects.html` 标题前的章节编号。左栏锚点必须与模块的 `id` 一致：`#posts`、`#projects`、`#friends`、`#about`。
+调整模块顺序时移动整行，同时更新 `posts.html`、`projects.html` 标题前的章节编号。左栏锚点必须与模块的 `id` 一致：`#posts`、`#projects`、`#friends`、`#about`、`#weekly`、`#daily-scene`。
 
 ## 7. 页面样式接口
 
@@ -284,8 +310,8 @@ hugo --gc --minify --cleanDestinationDir --panicOnWarning
 
 常见问题：
 
-- 图片不显示：检查文件是否位于 `static/`，配置路径不要写 `static/` 前缀。
-- GitHub Pages 路径错误：确认仓库名为 `zx539.github.io`，`baseURL` 为根域；内部链接和模板图片应使用 `relURL`，Markdown 图片由渲染模板处理。
+- 图片不显示：每日一景的图片应放在 `index.md` 同目录；其他静态图片放在 `static/`，配置路径不要写 `static/` 前缀。
+- GitHub Pages 路径错误：确认 `baseURL` 为 `https://zxpage.online/`，`static/CNAME` 与 Pages 设置均使用 `zxpage.online`；内部链接和模板图片应使用 `relURL`，Markdown 图片由渲染模板处理。
 - 新文章不显示：检查 `draft` 是否为 `true`，日期是否有效，文件是否在 `content/posts/`。
 - YAML 构建失败：检查缩进；数组项使用两个空格缩进并以 `-` 开头。
 
@@ -299,6 +325,21 @@ hugo --gc --minify --cleanDestinationDir --panicOnWarning
 2. GitHub Actions 执行 Hugo 生产构建。
 3. 构建结果发布到 `gh-pages` 分支。
 4. GitHub `Settings -> Pages` 保持 `Deploy from a branch`、`gh-pages`、`/ (root)`。
-5. 仓库名必须为 `zx539.github.io`，等待部署完成后访问 `https://zx539.github.io/`。
+5. 配置自定义域名 `zxpage.online`、DNS 和 HTTPS，等待部署完成后访问 `https://zxpage.online/` 或 `https://www.zxpage.online/`。DNS 记录见 README。
 
 不要手工修改 `public/`，它是构建产物并已被 `.gitignore` 忽略。
+
+## 10. 周报接口
+
+周报放在 `content/weekly/`，按周一日期命名，新建命令为：
+
+```bash
+python3 scripts/new-content.py weekly
+python3 scripts/new-content.py weekly --date 2026-10-30
+```
+
+第二条命令生成 `content/weekly/2026-10-26.md`，标题涵盖周一至周日。同一周只创建一次，重复执行保留原文。模板包含工作成果、学习记录、健身日记、问题与复盘、下周计划，可以按日期补写学习和运动内容。
+
+`title`、`date`、`summary`、`draft` 字段与博客含义一致。正式发布前将 `draft` 改为 `false`；Hugo 构建后会自动生成 `/weekly/` 列表和首页最近三篇。较长周报沿用现有阅读布局与文章目录，文章之间可以前后切换。
+
+完整操作说明见 [内容维护指南](../CONTENT_GUIDE.md)。自动收录发生在构建时，新增内容仍需发布；命令不包含定时生成或自动推送。

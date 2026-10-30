@@ -1,0 +1,28 @@
+{{ define "main" }}
+  <section class="section blog-index">
+    <div class="blog-index__toolbar">
+      <a class="back-link back-link--surface" href="{{ site.Home.RelPermalink }}">← 返回首页</a>
+      <div class="blog-heading__meta"><span><strong>{{ len .RegularPages }}</strong> 篇周报</span></div>
+    </div>
+    <header class="blog-heading__copy">
+      <p class="eyebrow">週の記録 · Weekly Notes</p>
+      <h1>{{ .Title }}</h1>
+      <p>{{ .Description }}</p>
+    </header>
+  </section>
+  <section class="section blog-archive" aria-label="周报列表">
+    {{ range $index, $page := .RegularPages.ByDate.Reverse }}
+      <article class="archive-entry">
+        <span class="archive-entry__index">{{ printf "%02d" (add $index 1) }}</span>
+        <time class="archive-entry__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+        <div class="archive-entry__body">
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          {{ with .Params.summary }}<div class="archive-entry__summary">{{ . | markdownify }}</div>{{ end }}
+        </div>
+        <a class="archive-entry__link" href="{{ .RelPermalink }}">阅读周报 <span>→</span></a>
+      </article>
+    {{ else }}
+      <p class="empty-state">还没有发布周报。</p>
+    {{ end }}
+  </section>
+{{ end }}

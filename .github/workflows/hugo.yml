@@ -34,7 +34,7 @@ jobs:
           hugo-version: latest
           extended: true
       - name: Build
-        run: hugo --gc --minify --cleanDestinationDir --baseURL "https://zx539.github.io/"
+        run: hugo --gc --minify --cleanDestinationDir
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
