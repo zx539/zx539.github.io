@@ -1,0 +1,25 @@
+{{ define "main" }}
+  <section class="section page-heading">
+    <p class="eyebrow">Daily Scenes</p>
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description }}</p>
+  </section>
+  <section class="section post-grid" aria-label="每日一景列表">
+    {{ range .RegularPages.ByDate.Reverse }}
+      {{ $cover := partial "photos/cover.html" . }}
+      {{ $alt := .Params.cover_alt | default .Title }}
+      <article class="post-card photo-card">
+        <a href="{{ .RelPermalink }}">
+          {{ with $cover }}<img src="{{ . }}" alt="{{ $alt }}" loading="lazy" decoding="async">{{ end }}
+          <div class="photo-card__copy">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+            <h2>{{ .Title }}</h2>
+            {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+          </div>
+        </a>
+      </article>
+    {{ else }}
+      <p class="empty-state">还没有发布每日一景。</p>
+    {{ end }}
+  </section>
+{{ end }}

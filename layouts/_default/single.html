@@ -1,12 +1,17 @@
 {{ define "main" }}
   <article class="section article">
     <header class="article-header">
-      <p class="eyebrow">{{ .Section | default "Page" }}</p>
+      <p class="eyebrow">{{ if eq .Section "weekly" }}周报{{ else if eq .Section "photos" }}每日一景{{ else }}{{ .Section | default "Page" }}{{ end }}</p>
       <h1>{{ .Title }}</h1>
       {{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>{{ end }}
     </header>
     <div class="article-body">
       {{ .Content }}
     </div>
+    {{ if eq .Section "weekly" }}
+      <a class="section-link article-back" href="{{ "weekly/" | relURL }}">← 全部周报</a>
+    {{ else if eq .Section "photos" }}
+      <a class="section-link article-back" href="{{ "photos/" | relURL }}">← 全部每日一景</a>
+    {{ end }}
   </article>
 {{ end }}

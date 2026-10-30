@@ -1,5 +1,6 @@
-baseURL = "https://zx539.github.io/MyBlog/"
+baseURL = "https://zxpage.online/"
 languageCode = "zh-CN"
+timeZone = "Asia/Shanghai"
 title = "张迅 | AI Agent 开发者"
 
 [params]

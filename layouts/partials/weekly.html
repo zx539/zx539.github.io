@@ -1,0 +1,16 @@
+<section class="section" aria-labelledby="weekly-heading">
+  <div class="section-title">
+    <div>
+      <p class="eyebrow">Weekly Notes</p>
+      <h2 id="weekly-heading">最近周报</h2>
+    </div>
+    <a class="section-link" href="{{ "weekly/" | relURL }}">查看全部周报 →</a>
+  </div>
+  <div class="post-grid">
+    {{ range first 3 (where site.RegularPages "Section" "weekly").ByDate.Reverse }}
+      {{ partial "weekly-card.html" . }}
+    {{ else }}
+      <p class="empty-state">还没有发布周报，新的工作、学习与健身记录会出现在这里。</p>
+    {{ end }}
+  </div>
+</section>

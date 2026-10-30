@@ -1,0 +1,14 @@
+{{ define "main" }}
+  <section class="section page-heading">
+    <p class="eyebrow">Weekly Notes</p>
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description }}</p>
+  </section>
+  <section class="section post-grid" aria-label="周报列表">
+    {{ range .RegularPages.ByDate.Reverse }}
+      {{ partial "weekly-card.html" . }}
+    {{ else }}
+      <p class="empty-state">还没有发布周报。</p>
+    {{ end }}
+  </section>
+{{ end }}

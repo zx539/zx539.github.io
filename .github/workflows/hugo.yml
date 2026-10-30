@@ -32,7 +32,7 @@ jobs:
           hugo-version: latest
           extended: true
       - name: Build
-        run: hugo --minify --baseURL "https://zx539.github.io/MyBlog/"
+        run: hugo --minify
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
