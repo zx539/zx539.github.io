@@ -1,0 +1,19 @@
+<section class="section editorial-section awards-section" id="awards" aria-labelledby="awards-heading">
+  <header class="chapter-heading">
+    <span>03</span>
+    <div>
+      <p class="eyebrow">栄誉の記録 · Awards</p>
+      <h2 id="awards-heading">所获奖项</h2>
+    </div>
+  </header>
+  <ul class="award-list" role="list">
+    {{ range $index, $award := (site.Data.profile.awards | default slice | uniq) }}
+      <li class="award-card">
+        <span class="award-card__index" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
+        <p>{{ $award }}</p>
+      </li>
+    {{ else }}
+      <li class="empty-state">奖项记录整理中。</li>
+    {{ end }}
+  </ul>
+</section>

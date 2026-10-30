@@ -4143,6 +4143,49 @@ body.inner-page {
   }
 }
 
+/* Awards */
+#awards {
+  scroll-margin-top: 90px;
+}
+
+.award-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.award-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #e7d4df;
+  border-top: 3px solid var(--sakura);
+  border-radius: var(--corner);
+  background: rgba(255, 250, 253, 0.94);
+  box-shadow: 4px 5px 0 rgba(93, 44, 78, 0.08);
+}
+
+.award-card__index {
+  flex-shrink: 0;
+  color: var(--vermilion);
+  font: 900 1.1rem var(--sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.award-card p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
 /* Weekly notes and Markdown-backed daily scenes */
 #weekly,
 #daily-scene {

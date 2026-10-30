@@ -4,7 +4,7 @@
 
 结构按后续维护拆分：
 
-- `data/profile.yaml`：首页个人信息、技能、项目经历。
+- `data/profile.yaml`：首页个人信息、技能、项目经历和所获奖项。
 - `content/posts/`：博客文章，新增 Markdown 文件即可。
 - `content/weekly/`：每周工作、学习、健身与复盘，首页展示最近三篇。
 - `content/photos/`：每日一景，每次记录的 Markdown 和照片放在同一文件夹。
@@ -72,7 +72,7 @@ python3 scripts/new-content.py post my-new-post --title "项目复盘"
 
 ## 常用内容更新
 
-- 修改昵称、签名、头像和项目：编辑 `data/profile.yaml`。
+- 修改昵称、签名、头像、项目和奖项：编辑 `data/profile.yaml`；奖项填写在 `awards` 列表中，首页项目经历后自动展示。
 - 修改浏览器标签图标：替换 `static/images/favicon.png` 和 `static/images/apple-touch-icon.png`。
 - 添加友情链接：将头像放进 `static/images/friends/`，再向 `data/friends.yaml` 追加对象。
 - 添加每日一景：使用 `python3 scripts/new-content.py photo 名称`，将图片放入生成的文件夹并编辑 `index.md`。

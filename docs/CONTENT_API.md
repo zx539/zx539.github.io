@@ -12,6 +12,7 @@
 | 空状态风景配图 | `data/daily.yaml` | `static/images/daily/` | `daily-scene.html` |
 | 博客文章 | `content/posts/*.md` | `static/images/posts/` | `posts.html`、`list.html`、`single.html` |
 | 项目经历 | `data/profile.yaml` 的 `projects` | 可选 `static/images/projects/` | `projects.html` |
+| 所获奖项 | `data/profile.yaml` 的 `awards` | 无 | `awards.html` |
 | 技能标签 | `data/profile.yaml` 的 `skills` | 无 | `home-sidebar.html`、`skills.html` |
 | 友情链接 | `data/friends.yaml` | `static/images/friends/` | `home-rail.html`、`friends.html` |
 | 关于页面 | `content/about.md` | 可选 `static/images/about/` | `single.html` |
@@ -104,11 +105,11 @@ education:
   courses: 课程一、课程二
 ```
 
-奖项位于 `awards`，添加方法与技能相同：
+奖项位于 `awards`，首页“项目经历”之后、“最近周报”之前以卡片展示，左栏“奖项”可直接跳转。每行填写年份、赛事和奖项，按配置顺序显示，相同文本只展示一次；列表为空或未配置时显示“奖项记录整理中”。
 
 ```yaml
 awards:
-  - 新奖项名称
+  - 2026 赛事名称 全国二等奖
 ```
 
 ## 3. 每日一景接口
@@ -257,7 +258,7 @@ Goldmark 已启用标题 ID、表格、任务列表、定义列表、脚注、�
 当前顺序：
 
 ```text
-左栏个人导航 | 中栏：封面 -> 最近文章 -> 项目经历 -> 最近周报 | 右栏：每日一景 -> About Me -> 友情链接
+左栏个人导航 | 中栏：封面 -> 最近文章 -> 项目经历 -> 所获奖项 -> 最近周报 | 右栏：每日一景 -> About Me -> 友情链接
 ```
 
 中栏每个模块对应一个 partial：
@@ -266,10 +267,11 @@ Goldmark 已启用标题 ID、表格、任务列表、定义列表、脚注、�
 {{ partial "hero.html" . }}
 {{ partial "posts.html" . }}
 {{ partial "projects.html" . }}
+{{ partial "awards.html" . }}
 {{ partial "weekly.html" . }}
 ```
 
-调整模块顺序时移动整行，同时更新 `posts.html`、`projects.html` 标题前的章节编号。左栏锚点必须与模块的 `id` 一致：`#posts`、`#projects`、`#friends`、`#about`、`#weekly`、`#daily-scene`。
+调整模块顺序时移动整行，同时更新 `posts.html`、`projects.html`、`awards.html`、`weekly.html` 标题前的章节编号。左栏锚点必须与模块的 `id` 一致：`#posts`、`#projects`、`#awards`、`#friends`、`#about`、`#weekly`、`#daily-scene`。
 
 ## 7. 页面样式接口
 
