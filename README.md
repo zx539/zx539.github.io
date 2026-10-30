@@ -2,6 +2,15 @@
 
 这是一个采用樱花布局的 Hugo 个人博客，主地址为 [https://zxpage.online/](https://zxpage.online/)，同时支持 [https://www.zxpage.online/](https://www.zxpage.online/)。博客首页显示在根路径 `/`，文章、周报和每日一景分别位于 `/posts/`、`/weekly/` 和 `/photos/`。
 
+## 首页功能
+
+- 中栏依次展示个人封面、最近文章、项目经历、所获奖项和最近周报。
+- 左栏提供导航与技能标签，点击“奖项”可直接跳转到奖项卡片。
+- 右栏展示每日一景、个人简介和友情链接。
+- 页面适配手机和桌面；下方时钟显示本地时、分、秒，每秒更新。
+
+## 内容目录
+
 结构按后续维护拆分：
 
 - `data/profile.yaml`：首页个人信息、技能、项目经历和所获奖项。
@@ -54,6 +63,18 @@ hugo new posts/my-new-post.md
 
 文章由 Hugo Goldmark 渲染，支持标题锚点、列表、任务列表、定义列表、表格、引用、代码高亮、图片说明和脚注。具体格式见 `docs/CONTENT_API.md`。
 
+## 所获奖项
+
+编辑 `data/profile.yaml` 中的 `awards` 列表，每行填写一项奖项：
+
+```yaml
+awards:
+  - 2026 赛事名称 全国二等奖
+  - 2025 另一赛事名称 省级一等奖
+```
+
+奖项按配置顺序展示，相同文本只显示一次；列表为空或未配置时显示“奖项记录整理中”。修改后重新构建发布即可，无需修改模板。
+
 ## 周报与每日一景
 
 在仓库根目录运行以下命令，使用 Python 3 即可生成 Markdown 草稿：
@@ -83,3 +104,16 @@ python3 scripts/new-content.py post my-new-post --title "项目复盘"
 按 [服务器部署指南](DEPLOYMENT.md) 操作：在 Ubuntu 服务器上拉取代码，用 Hugo 构建，再由 Nginx 托管并配置 HTTPS。以后运行 `git pull --ff-only`、重新构建并同步网站文件即可更新。
 
 主域名为 `zxpage.online`，同时支持 `www.zxpage.online`，网站显示在域名根路径 `/`。
+
+已按指南完成首次部署后，在服务器运行以下命令更新网站：
+
+```bash
+set -e
+cd ~/my-blog
+git pull --ff-only
+hugo --gc --minify --panicOnWarning --destination dist-server --cleanDestinationDir
+test -f dist-server/index.html
+sudo rsync -av --delete --chmod=D755,F644 dist-server/ /var/www/myblog/html/
+```
+
+`/var/www/myblog/html/` 应是专用网站目录，`--delete` 会清理其中过期的文件。更新静态文件无需重启 Nginx。
