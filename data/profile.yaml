@@ -35,6 +35,7 @@ projects:
     summary: 参与洛书 2D 图形引擎、工具资源管理系统、OCR 识别软件、VS Code 插件、虚拟文件系统与包管理器等模块开发。
     outcomes:
       - 7 余篇软件著作权
+      - OS2ATC（2025）会议洛书代表
   - title: 基于 Unikernel 的轻量级物联网库操作系统研究
     period: 2025.11 - 2026.11
     role: 省级项目 / 技术开发岗 / 项目主要负责人
