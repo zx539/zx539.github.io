@@ -10,7 +10,7 @@
   tag: Code
 - name: 东北大学秦皇岛分校
   url: https://www.neuq.edu.cn/
-  avatar: images/friends/neuq.webp
+  avatar: images/friends/neuq.png
   description: 学习与项目成长的地方。
   tag: Campus
 - name: Hugo
@@ -23,3 +23,8 @@
   avatar: images/friends/shettydev.webp
   description: ShettyDev 的个人技术博客。
   tag: Blog
+- name: losu
+  url: https://losu.tech
+  avatar: images/friends/losu.png
+  description: 洛书编程语言官网
+  tag: Site
