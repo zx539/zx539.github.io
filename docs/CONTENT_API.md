@@ -326,6 +326,8 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 
 工作流：`.github/workflows/hugo.yml`
 
+构建版本固定为 Hugo Extended 0.131.0，本地验证应使用相同版本；升级需同步调整工作流并重新验证。
+
 发布流程：
 
 1. 提交并推送源码分支 `codex/sakura-template-layout`。工作流仅允许此分支发布，手动运行也需选择它。

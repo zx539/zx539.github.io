@@ -18,7 +18,7 @@
 
 ## 本地预览
 
-安装 Hugo Extended、Python 3 和 Node.js（运行回归测试用），在源码分支工作：
+安装 Hugo Extended 0.131.0（与 CI 一致）、Python 3 和 Node.js（运行回归测试用），在源码分支工作：
 
 ```bash
 git clone --branch codex/sakura-template-layout https://github.com/zx539/zx539.github.io.git

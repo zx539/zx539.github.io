@@ -29,7 +29,7 @@ sudo apt install -y hugo rsync openssh-client python3 nodejs
 hugo version
 ```
 
-其他系统的安装方式见 [Hugo 安装说明](https://gohugo.io/installation/)。如果发行版自带的版本无法构建，安装较新的 Hugo Extended 版本。本项目现有 GitHub Actions 使用最新的 Hugo Extended；当前样式为普通 CSS，没有额外的 npm 安装步骤。构建成功后，建议记录 `hugo version` 的输出，后续保持构建版本一致。
+其他系统的安装方式见 [Hugo 安装说明](https://gohugo.io/installation/)。本项目 GitHub Actions 固定使用已验证的 Hugo Extended 0.131.0，本地也建议安装相同版本；若软件源提供其他版本，按官方安装说明获取 0.131.0。升级 Hugo 时应同时更新 CI 版本并通过生产构建和回归测试。当前样式为普通 CSS，没有额外的 npm 安装步骤。
 
 ### 配置网站地址
 
