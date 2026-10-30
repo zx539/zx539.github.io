@@ -18,11 +18,11 @@
 
 ## 本地预览
 
-安装 Hugo Extended 0.131.0（与 CI 一致）、Python 3 和 Node.js（运行回归测试用），在源码分支工作：
+安装 Hugo Extended 0.131.0、Python 3 和 Node.js（运行回归测试用），在源码分支工作：
 
 ```bash
-git clone --branch codex/sakura-template-layout https://github.com/zx539/zx539.github.io.git
-cd zx539.github.io
+git clone --branch codex/sakura-template-layout https://gitcode.com/2403_88363745/my-blog.git
+cd my-blog
 ```
 
 ```bash
@@ -78,28 +78,8 @@ python3 scripts/new-content.py post my-new-post --title "项目复盘"
 - 添加每日一景：使用 `python3 scripts/new-content.py photo 名称`，将图片放入生成的文件夹并编辑 `index.md`。
 - 替换背景视频：覆盖 `static/media/background.mp4`，保留 MP4/H.264 格式。
 
-## GitHub Pages 部署
+## 服务器部署
 
-仓库默认分支为 `codex/sakura-template-layout`，源码及日常维护统一使用该分支。当前工作流仅允许该分支发布：推送后先构建、运行回归测试，通过后更新 `gh-pages`；手动运行也需选择该分支。`gh-pages` 仅存放发布产物。
+按 [服务器部署指南](DEPLOYMENT.md) 操作：在 Ubuntu 服务器上拉取代码，用 Hugo 构建，再由 Nginx 托管并配置 HTTPS。以后运行 `git pull --ff-only`、重新构建并同步网站文件即可更新。
 
-1. 确认 `hugo.toml` 中的 `baseURL` 为 `https://zxpage.online/`，`static/CNAME` 内容为 `zxpage.online`。
-2. 推送代码，在 `Actions` 页面等待 `Deploy Hugo site to Pages` 工作流完成。
-3. 首次部署时，进入 `Settings -> Pages`，将 Source 设为 `Deploy from a branch`，Branch 选择 `gh-pages`，目录选择 `/ (root)`。
-4. 在 `Custom domain` 中填写 `zxpage.online` 并保存，配置下表中的 DNS 记录。
-5. DNS 检查和证书签发完成后勾选 `Enforce HTTPS`，检查两个域名都能访问；GitHub Pages 会将 `www.zxpage.online` 重定向到主域名。
-
-GitHub Pages 托管使用以下记录：
-
-| 类型 | 主机记录 | 记录值 |
-| --- | --- | --- |
-| A | `@` | `185.199.108.153` |
-| A | `@` | `185.199.109.153` |
-| A | `@` | `185.199.110.153` |
-| A | `@` | `185.199.111.153` |
-| CNAME | `www` | `zx539.github.io` |
-
-工作流直接读取 `hugo.toml`，不再通过命令行写死地址。更换域名时，同步更新配置、`static/CNAME`、Pages 设置和 DNS。
-
-## 自有服务器部署
-
-Nginx、HTTPS、发布更新和回退步骤见 [自有服务器部署指南](DEPLOYMENT.md)。自有服务器托管时，`@` 的 A 记录指向服务器公网 IP，`www` 可通过 CNAME 指向 `zxpage.online`，并为两个域名申请证书。DNS 应按实际托管位置选择配置。
+主域名为 `zxpage.online`，同时支持 `www.zxpage.online`，网站显示在域名根路径 `/`。
