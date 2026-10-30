@@ -1,6 +1,6 @@
 {{- $cover := "" -}}
 {{- if .Params.cover -}}
-  {{- with .Resources.GetMatch .Params.cover -}}
+  {{- with .Resources.Get .Params.cover -}}
     {{- if eq .MediaType.MainType "image" -}}
       {{- $cover = .RelPermalink -}}
     {{- else -}}

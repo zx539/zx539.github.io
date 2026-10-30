@@ -21,11 +21,11 @@
 
 ### 安装 Hugo
 
-在存放此仓库的开发电脑上安装 Hugo。Ubuntu/Debian 可以运行：
+在存放此仓库的开发电脑上安装 Hugo 和回归测试工具。Ubuntu/Debian 可以运行：
 
 ```bash
 sudo apt update
-sudo apt install -y hugo rsync openssh-client
+sudo apt install -y hugo rsync openssh-client python3 nodejs
 hugo version
 ```
 
@@ -51,10 +51,21 @@ baseURL = "https://zxpage.online/"
 
 ### 构建正式站点
 
+首次获取源码时，明确使用维护分支：
+
+```bash
+git clone --branch codex/sakura-template-layout https://github.com/zx539/zx539.github.io.git
+cd zx539.github.io
+```
+
+已有仓库应先保存本地修改，再切换到 `codex/sakura-template-layout` 并运行 `git pull --ff-only`。不要使用仅保存构建产物的 `gh-pages` 分支作为源码。
+
 在仓库根目录运行：
 
 ```bash
-hugo --minify --baseURL "https://zxpage.online/" --destination dist-server --cleanDestinationDir
+node tests/daily-scene.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+hugo --gc --minify --panicOnWarning --baseURL "https://zxpage.online/" --destination dist-server --cleanDestinationDir
 test -f dist-server/index.html
 ```
 
@@ -201,6 +212,7 @@ sudo certbot renew --dry-run
 
 - 首页、关于页、文章列表、周报和每日一景都能打开，刷新详情页面也正常。
 - CSS、头像、每日一景轮播和图文详情中的图片正常显示。
+- 页面下方的时钟显示时、分、秒并每秒更新；它使用访问者设备本地时区，每日一景的日期筛选使用北京时间。
 - 页面中的内部链接使用当前域名根路径，不再带旧的 `/MyBlog/`。
 - `https://zxpage.online/index.xml` 和 `https://zxpage.online/sitemap.xml` 可以访问。
 
@@ -213,7 +225,9 @@ sudo certbot renew --dry-run
 ```bash
 set -e
 
-hugo --minify --baseURL "https://zxpage.online/" --destination dist-server --cleanDestinationDir
+node tests/daily-scene.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+hugo --gc --minify --panicOnWarning --baseURL "https://zxpage.online/" --destination dist-server --cleanDestinationDir
 test -f dist-server/index.html
 
 release_id="$(date -u +%Y%m%dT%H%M%SZ)-$$"
@@ -251,10 +265,10 @@ mv -Tf "$rollback_link" /var/www/myblog/current
 
 ## 8. 和现有 GitHub Pages 配置的关系
 
-仓库中的 `.github/workflows/hugo.yml` 会在推送 `main`、`master`、`feature/anime-markdown-ui` 或 `codex/sakura-template-layout` 时构建并发布到 `gh-pages`，构建命令为：
+仓库中的 `.github/workflows/hugo.yml` 仅在推送 `codex/sakura-template-layout` 时自动运行，手动运行也仅允许该分支发布。工作流在构建和回归测试全部通过后发布到 `gh-pages`，构建命令为：
 
 ```bash
-hugo --gc --minify --cleanDestinationDir
+hugo --gc --minify --cleanDestinationDir --panicOnWarning
 ```
 
 因此需要注意：

@@ -18,15 +18,33 @@
 
 ## 本地预览
 
+安装 Hugo Extended、Python 3 和 Node.js（运行回归测试用），在源码分支工作：
+
+```bash
+git clone --branch codex/sakura-template-layout https://github.com/zx539/zx539.github.io.git
+cd zx539.github.io
+```
+
 ```bash
 hugo server -D
 ```
+
+打开 `http://localhost:1313/`；`-D` 会包含草稿。页面下方时钟按访问者设备的本地时区显示 `HH:mm:ss`，每秒更新。
 
 生产构建与路径检查：
 
 ```bash
 hugo --gc --minify --cleanDestinationDir --panicOnWarning
 ```
+
+提交前运行回归测试（Python 测试中的封面验证需要 Hugo）：
+
+```bash
+node tests/daily-scene.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+```
+
+测试覆盖北京时间的七天照片窗口、跨年周报生成、重复文件保护和特殊文件名的封面查找。
 
 ## 新增文章
 
@@ -62,7 +80,7 @@ python3 scripts/new-content.py post my-new-post --title "项目复盘"
 
 ## GitHub Pages 部署
 
-当前开发分支为 `codex/sakura-template-layout`，工作流已监听该分支；推送后会自动构建并更新 `gh-pages`。
+源码及日常维护统一使用 `codex/sakura-template-layout`。当前工作流仅允许该分支发布：推送后先构建、运行回归测试，通过后更新 `gh-pages`；手动运行也需选择该分支。`gh-pages` 仅存放发布产物。
 
 1. 确认 `hugo.toml` 中的 `baseURL` 为 `https://zxpage.online/`，`static/CNAME` 内容为 `zxpage.online`。
 2. 推送代码，在 `Actions` 页面等待 `Deploy Hugo site to Pages` 工作流完成。

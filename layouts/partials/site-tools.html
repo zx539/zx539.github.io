@@ -1,6 +1,6 @@
 <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
 <aside class="site-tools" aria-label="页面工具">
-  <time class="site-clock" data-site-clock aria-label="本地时间">--:--</time>
+  <time class="site-clock" data-site-clock aria-label="本地时间">--:--:--</time>
   <button type="button" data-video-toggle aria-label="暂停背景视频" title="暂停背景视频">Ⅱ</button>
   <button type="button" data-scroll-top aria-label="返回顶部" title="返回顶部">↑</button>
 </aside>
@@ -27,12 +27,16 @@
       scrollFrame = requestAnimationFrame(updateScroll);
     };
 
+    const clockFormat = new Intl.DateTimeFormat("zh-CN", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23",
+    });
     const updateClock = () => {
-      clock.textContent = new Intl.DateTimeFormat("zh-CN", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      }).format(new Date());
+      const now = new Date();
+      clock.textContent = clockFormat.format(now);
+      clock.dateTime = now.toISOString();
     };
 
     const syncVideoButton = () => {
@@ -78,6 +82,9 @@
     updateScroll();
     updateClock();
     syncVideoButton();
-    window.setInterval(updateClock, 30000);
+    window.setInterval(updateClock, 1000);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) updateClock();
+    });
   })();
 </script>

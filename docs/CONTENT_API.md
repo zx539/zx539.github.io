@@ -292,7 +292,7 @@ Goldmark 已启用标题 ID、表格、任务列表、定义列表、脚注、�
 
 首页遮罩动画由 `layouts/partials/site-intro.html` 提供，对应样式名称为 `.sakura-intro`。全页和封面樱花数量分别在 `layouts/index.html` 与 `layouts/partials/hero.html` 的 `seq` 数值中调整。动画必须同步保留 `prefers-reduced-motion` 规则。
 
-视频背景位于 `static/media/background.mp4`，模板为 `layouts/partials/ambient-video.html`。首页自动播放；文章和其他内页默认只加载静态 poster，用户点击播放按钮后才加载视频，以减少滚动卡顿。替换时保持文件名不变；建议使用 H.264 编码、MP4 容器、无音轨或静音内容，文件尽量控制在 5MB 内。页面工具位于 `layouts/partials/site-tools.html`，包含阅读进度、背景播放控制、返回顶部、本地时间和代码复制；滚动更新通过 `requestAnimationFrame` 合并。
+视频背景位于 `static/media/background.mp4`，模板为 `layouts/partials/ambient-video.html`。首页自动播放；文章和其他内页默认只加载静态 poster，用户点击播放按钮后才加载视频，以减少滚动卡顿。替换时保持文件名不变；建议使用 H.264 编码、MP4 容器、无音轨或静音内容，文件尽量控制在 5MB 内。页面工具位于 `layouts/partials/site-tools.html`，包含阅读进度、背景播放控制、返回顶部、本地时间和代码复制；滚动更新通过 `requestAnimationFrame` 合并。页面下方时钟按访问者设备本地时区显示 24 小时制 `HH:mm:ss`，每秒更新，标签页恢复可见时立即校准。
 
 ## 8. 本地验证接口
 
@@ -308,6 +308,13 @@ hugo server -D
 hugo --gc --minify --cleanDestinationDir --panicOnWarning
 ```
 
+回归测试（需要 Node.js、Python 3 和 Hugo；缺少 Hugo 时封面测试会跳过）：
+
+```bash
+node tests/daily-scene.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+```
+
 常见问题：
 
 - 图片不显示：每日一景的图片应放在 `index.md` 同目录；其他静态图片放在 `static/`，配置路径不要写 `static/` 前缀。
@@ -321,8 +328,8 @@ hugo --gc --minify --cleanDestinationDir --panicOnWarning
 
 发布流程：
 
-1. 提交并推送工作流监听的分支。
-2. GitHub Actions 执行 Hugo 生产构建。
+1. 提交并推送源码分支 `codex/sakura-template-layout`。工作流仅允许此分支发布，手动运行也需选择它。
+2. GitHub Actions 执行 Hugo 生产构建及回归测试；任一步失败都会停止发布。
 3. 构建结果发布到 `gh-pages` 分支。
 4. GitHub `Settings -> Pages` 保持 `Deploy from a branch`、`gh-pages`、`/ (root)`。
 5. 配置自定义域名 `zxpage.online`、DNS 和 HTTPS，等待部署完成后访问 `https://zxpage.online/` 或 `https://www.zxpage.online/`。DNS 记录见 README。

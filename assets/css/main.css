@@ -1957,11 +1957,12 @@ body,
 }
 
 .site-clock {
-  min-width: 54px;
+  min-width: 78px;
   padding-inline: 8px;
   color: var(--vermilion);
   font-size: 0.72rem;
   font-weight: 900;
+  font-variant-numeric: tabular-nums;
   text-align: center;
 }
 
@@ -2196,11 +2197,7 @@ body,
   .site-tools {
     right: 10px;
     bottom: 10px;
-    grid-template-columns: 38px 38px;
-  }
-
-  .site-clock {
-    display: none;
+    grid-template-columns: auto 40px 40px;
   }
 
   .blog-index,

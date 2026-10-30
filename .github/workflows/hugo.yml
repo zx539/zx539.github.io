@@ -3,9 +3,6 @@ name: Deploy Hugo site to Pages
 on:
   push:
     branches:
-      - main
-      - master
-      - feature/anime-markdown-ui
       - codex/sakura-template-layout
   workflow_dispatch:
 
@@ -22,6 +19,7 @@ defaults:
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/codex/sakura-template-layout'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,7 +32,11 @@ jobs:
           hugo-version: latest
           extended: true
       - name: Build
-        run: hugo --gc --minify --cleanDestinationDir
+        run: hugo --gc --minify --cleanDestinationDir --panicOnWarning
+      - name: Test
+        run: |
+          node tests/daily-scene.test.mjs
+          python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
