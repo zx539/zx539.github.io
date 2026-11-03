@@ -4,3 +4,5 @@ resources/_gen/
 assert/背景动图.mp4
 __pycache__/
 dist-server/
+static/images/software-copyright/
+static/images/patent/

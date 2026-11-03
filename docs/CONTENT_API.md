@@ -12,7 +12,7 @@
 | 空状态风景配图 | `data/daily.yaml` | `static/images/daily/` | `daily-scene.html` |
 | 博客文章 | `content/posts/*.md` | `static/images/posts/` | `posts.html`、`list.html`、`single.html` |
 | 项目经历 | `data/profile.yaml` 的 `projects` | 可选 `static/images/projects/` | `projects.html` |
-| 所获奖项 | `data/profile.yaml` 的 `awards` | 无 | `awards.html` |
+| 所获奖项 | `data/profile.yaml` 的 `awards` | `static/images/award/` | `awards.html`、`assets/js/awards.js` |
 | 技能标签 | `data/profile.yaml` 的 `skills` | 无 | `home-sidebar.html`、`skills.html` |
 | 友情链接 | `data/friends.yaml` | `static/images/friends/` | `home-rail.html`、`friends.html` |
 | 关于页面 | `content/about.md` | 可选 `static/images/about/` | `single.html` |
@@ -105,12 +105,30 @@ education:
   courses: 课程一、课程二
 ```
 
-奖项位于 `awards`，首页“项目经历”之后、“最近周报”之前以卡片展示，左栏“奖项”可直接跳转。每行填写年份、赛事和奖项，按配置顺序显示，相同文本只展示一次；列表为空或未配置时显示“奖项记录整理中”。
+奖项位于 `awards`，首页“项目经历”之后、“最近周报”之前按国家级和省级分别展示。原先同时包含省奖和国奖的记录需拆成两个对象，各自关联证书。
 
 ```yaml
 awards:
-  - 2026 赛事名称 全国二等奖
+  - year: 2026
+    title: 比赛名称
+    level: 全国二等奖
+    scope: national
+    image: images/award/2026比赛名称-全国二等奖.webp
+    file: images/award/2026比赛名称-全国二等奖.pdf
 ```
+
+| 字段 | 用途 |
+| --- | --- |
+| `year`、`title`、`level` | 年份、比赛名称、获奖等级 |
+| `scope` | `national` 国家级，`provincial` 省级；组内按配置顺序展示 |
+| `image` | 可选，弹窗预览图路径，相对于 `static/`，建议 WebP |
+| `file` | 可选，原始 JPG/PDF 路径；省略时使用 `image` |
+
+证书统一放在 `static/images/award/`，文件名采用“年份＋比赛名-获奖等级”。PDF 配一张同名 WebP 预览图，弹窗展示预览并提供原始文件入口。配置的文件不存在会使构建失败，避免发布失效链接。
+
+未提供 `image` 时显示“证书待补充”，不创建失效弹窗。支持 Esc、关闭按钮及点击遮罩关闭，并恢复键盘焦点；无 JavaScript 时链接直接打开图片。
+
+`static/images/software-copyright/` 与 `static/images/patent/` 当前同时被 `.gitignore` 和 Hugo 静态目录挂载的 `excludeFiles` 排除。后续补齐并准备公开时，需要同时调整这两处配置。
 
 ## 3. 每日一景接口
 

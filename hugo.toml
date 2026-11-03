@@ -3,6 +3,12 @@ languageCode = "zh-CN"
 timeZone = "Asia/Shanghai"
 title = "风间惟花 | AI Agent 开发者"
 
+[module]
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+    excludeFiles = ["images/software-copyright/**", "images/patent/**"]
+
 [params]
   description = "风间惟花的个人博客与作品集，记录 AI Agent、系统软件、编程语言与校园项目实践。"
   author = "风间惟花"

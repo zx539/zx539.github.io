@@ -4157,12 +4157,28 @@ body.inner-page {
   list-style: none;
 }
 
-.award-card {
+.award-group + .award-group {
+  margin-top: 28px;
+}
+
+.award-group h3 {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+.award-group h3 span {
+  color: var(--ink-soft);
+  font: 700 0.75rem var(--sans);
+}
+
+.award-card {
   min-width: 0;
-  padding: 20px;
+  overflow: hidden;
   border: 1px solid #e7d4df;
   border-top: 3px solid var(--sakura);
   border-radius: var(--corner);
@@ -4170,20 +4186,117 @@ body.inner-page {
   box-shadow: 4px 5px 0 rgba(93, 44, 78, 0.08);
 }
 
-.award-card__index {
-  flex-shrink: 0;
-  color: var(--vermilion);
-  font: 900 1.1rem var(--sans);
-  font-variant-numeric: tabular-nums;
+.award-card__link,
+.award-card__body {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px;
+  overflow-wrap: anywhere;
 }
 
-.award-card p {
-  margin: 0;
+.award-card__link:hover {
+  background: #fff0f6;
+}
+
+.award-card__link:focus-visible,
+.award-dialog a:focus-visible,
+.award-dialog button:focus-visible {
+  outline: 3px solid var(--vermilion);
+  outline-offset: -3px;
+}
+
+.award-card__year,
+.award-card__hint {
+  color: var(--ink-soft);
+  font: 700 0.75rem var(--sans);
+}
+
+.award-card__title {
   color: var(--ink);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.8;
+}
+
+.award-card__level {
+  margin-top: auto;
+  padding: 4px 10px;
+  border-radius: var(--corner);
+  color: var(--vermilion);
+  background: #ffe7f1;
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.award-dialog {
+  width: min(960px, calc(100% - 24px));
+  max-width: calc(100% - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid #e7d4df;
+  border-radius: var(--corner);
+  color: var(--ink);
+  background: var(--paper);
+  overscroll-behavior: contain;
+}
+
+.award-dialog::backdrop {
+  background: rgba(35, 19, 31, 0.78);
+}
+
+.award-dialog__panel {
+  padding: clamp(14px, 3vw, 24px);
+}
+
+.award-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.award-dialog__header h2 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.7;
   overflow-wrap: anywhere;
+}
+
+.award-dialog__close {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e7d4df;
+  border-radius: var(--corner);
+  color: var(--vermilion);
+  background: #ffe7f1;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.award-dialog__image {
+  width: 100%;
+  max-height: 70dvh;
+  object-fit: contain;
+  background: #fff;
+}
+
+.award-dialog__original {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--vermilion);
+  font-weight: 700;
+}
+
+.award-modal-open,
+.award-modal-open body {
+  overflow: hidden;
 }
 
 /* Weekly notes and Markdown-backed daily scenes */

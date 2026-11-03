@@ -56,10 +56,55 @@ education:
   period: 2024.09 - 至今
   courses: 数字电子技术基础、模拟电子技术基础、信号与系统、电磁场与电磁波、C 语言程序设计、数字信号处理、通信原理、高频电子线路、单片机技术与原理、FPGA设计
 awards:
-  - 2025 全国大学生系统能力大赛 CPU 设计赛道全国三等奖
-  - 2025 中国大学生计算机设计大赛河北省一等奖
-  - 2025 全国大学生系统能力大赛 OS 挑战赛赛道全国优胜奖
-  - 2026 全国大学生系统能力大赛 CPU 设计赛道全国三等奖
-  - 2026 中国 TRIZ 杯大学生创新方法大赛全国二等奖
-  - 2025 中国国际大学生创新大赛河北省金奖、全国金奖
-  - 2025 挑战杯河北省特等奖、全国三等奖
+  - year: 2025
+    title: 全国大学生计算机系统能力大赛 CPU 设计赛
+    level: 全国团体赛三等奖
+    scope: national
+    image: images/award/2025全国大学生计算机系统能力大赛CPU设计赛-全国团体赛三等奖.webp
+    file: images/award/2025全国大学生计算机系统能力大赛CPU设计赛-全国团体赛三等奖.pdf
+  - year: 2025
+    title: 全国大学生计算机系统能力大赛 OS 功能挑战赛道
+    level: 全国优胜奖
+    scope: national
+    image: images/award/2025全国大学生计算机系统能力大赛操作系统设计赛OS功能挑战赛道-全国优胜奖.webp
+    file: images/award/2025全国大学生计算机系统能力大赛操作系统设计赛OS功能挑战赛道-全国优胜奖.pdf
+  - year: 2026
+    title: 全国大学生计算机系统能力大赛 CPU 设计赛
+    level: 全国三等奖
+    scope: national
+    image: images/award/2026全国大学生计算机系统能力大赛CPU设计赛-全国三等奖.webp
+    file: images/award/2026全国大学生计算机系统能力大赛CPU设计赛-全国三等奖.pdf
+  - year: 2026
+    title: 中国 TRIZ 杯大学生创新方法大赛
+    level: 全国二等奖
+    scope: national
+    image: images/award/2026中国TRIZ杯大学生创新方法大赛-全国二等奖.webp
+    file: images/award/2026中国TRIZ杯大学生创新方法大赛-全国二等奖.pdf
+  - year: 2025
+    title: 中国国际大学生创新大赛
+    level: 全国金奖
+    scope: national
+    image: images/award/2025中国国际大学生创新大赛-全国金奖.webp
+    file: images/award/2025中国国际大学生创新大赛-全国金奖.jpg
+  - year: 2025
+    title: 挑战杯全国大学生课外学术科技作品竞赛
+    level: 全国三等奖
+    scope: national
+    image: images/award/2025挑战杯全国大学生课外学术科技作品竞赛-全国三等奖.webp
+    file: images/award/2025挑战杯全国大学生课外学术科技作品竞赛-全国三等奖.jpg
+  - year: 2025
+    title: 中国大学生计算机设计大赛
+    level: 河北省一等奖
+    scope: provincial
+    image: images/award/2025中国大学生计算机设计大赛-河北省一等奖.webp
+    file: images/award/2025中国大学生计算机设计大赛-河北省一等奖.jpg
+  - year: 2025
+    title: 中国国际大学生创新大赛
+    level: 河北省金奖
+    scope: provincial
+  - year: 2025
+    title: 挑战杯河北省大学生课外学术科技作品竞赛
+    level: 河北省特等奖
+    scope: provincial
+    image: images/award/2025挑战杯河北省大学生课外学术科技作品竞赛-河北省特等奖.webp
+    file: images/award/2025挑战杯河北省大学生课外学术科技作品竞赛-河北省特等奖.jpg

@@ -65,15 +65,21 @@ hugo new posts/my-new-post.md
 
 ## 所获奖项
 
-编辑 `data/profile.yaml` 中的 `awards` 列表，每行填写一项奖项：
+编辑 `data/profile.yaml` 中的 `awards` 列表，按国家级、省级分组展示。点击有证书的卡片可弹窗查看荣誉照片，并打开原始 JPG 或 PDF；支持 Esc、关闭按钮和点击遮罩退出。
 
 ```yaml
 awards:
-  - 2026 赛事名称 全国二等奖
-  - 2025 另一赛事名称 省级一等奖
+  - year: 2026
+    title: 比赛名称
+    level: 全国二等奖
+    scope: national
+    image: images/award/2026比赛名称-全国二等奖.webp
+    file: images/award/2026比赛名称-全国二等奖.pdf
 ```
 
-奖项按配置顺序展示，相同文本只显示一次；列表为空或未配置时显示“奖项记录整理中”。修改后重新构建发布即可，无需修改模板。
+`scope` 填 `national`（国家级）或 `provincial`（省级）。证书文件放在 `static/images/award/`，采用“年份＋比赛名-获奖等级”命名；`image` 使用图片预览，`file` 保留原始文件。尚未补齐证书时省略这两个字段，卡片显示“证书待补充”。修改后重新构建发布即可。
+
+`static/images/software-copyright/` 和 `static/images/patent/` 暂不提交，也不会进入 Hugo 构建产物；资料补齐后再调整 Git 忽略和 `hugo.toml` 中的静态目录排除配置。
 
 ## 周报与每日一景
 
