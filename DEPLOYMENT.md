@@ -170,7 +170,9 @@ curl --fail --retry 5 --retry-connrefused --retry-delay 1 http://127.0.0.1:9001/
 )
 ```
 
-最后应返回 `{"ok": true}`。路径含空格时，需要为环境文件里的路径加双引号，并按实际路径调整 systemd 的 `ExecStart`。
+最后应返回 `{"ok": true}`。这是服务存活检查，不会触发构建或发布。首次安装后，可按第 6.5 节手动部署一次；完成第 6.4 节配置后，新的 GitCode 推送才会自动触发部署。新文章也必须先提交并推送到目标分支，服务器才能获取。
+
+路径含空格时，需要为环境文件里的路径加双引号，并按实际路径调整 systemd 的 `ExecStart`。
 
 如果旧命令报 `sed: can't read ...`，说明服务器的当前目录或分支不对，或尚未拉取包含部署文件的提交。先进入 `~/my-blog`，确认 `git branch --show-current` 为 `codex/sakura-template-layout`，再从 GitCode 拉取更新并检查模板确实存在。模板缺失时不要继续安装。
 
