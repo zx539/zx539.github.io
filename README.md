@@ -107,19 +107,15 @@ python3 scripts/new-content.py post my-new-post --title "项目复盘"
 
 ## 服务器部署
 
-按 [服务器部署指南](DEPLOYMENT.md) 操作：在 Ubuntu 服务器上拉取代码，用 Hugo 构建，再由 Nginx 托管并配置 HTTPS。以后运行 `git pull --ff-only`、重新构建并同步网站文件即可更新。
+按 [服务器部署指南](DEPLOYMENT.md) 操作：在 Ubuntu 服务器上拉取代码，用 Hugo 构建，再由 Nginx 托管并配置 HTTPS。完成指南第 6 节的 GitCode WebHook 配置后，向 `codex/sakura-template-layout` 分支推送就会自动拉取、构建和发布。
 
 主域名为 `zxpage.online`，同时支持 `www.zxpage.online`，网站显示在域名根路径 `/`。
 
-已按指南完成首次部署后，在服务器运行以下命令更新网站：
+已配置部署账号和网站目录权限后，可在服务器手动更新或重试：
 
 ```bash
-set -e
 cd ~/my-blog
-git pull --ff-only
-hugo --gc --minify --panicOnWarning --destination dist-server --cleanDestinationDir
-test -f dist-server/index.html
-sudo rsync -av --delete --chmod=D755,F644 dist-server/ /var/www/myblog/html/
+DEPLOY_REMOTE=gitcode bash scripts/deploy.sh
 ```
 
 `/var/www/myblog/html/` 应是专用网站目录，`--delete` 会清理其中过期的文件。更新静态文件无需重启 Nginx。

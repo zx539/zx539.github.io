@@ -1,0 +1,17 @@
+[Unit]
+Description=GitCode webhook deployment for my-blog
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/home/deploy/my-blog
+EnvironmentFile=/etc/myblog/gitcode-webhook.env
+ExecStart=/usr/bin/python3 /home/deploy/my-blog/scripts/gitcode-webhook.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
